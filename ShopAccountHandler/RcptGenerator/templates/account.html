@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    new page
+{% endblock title %}
+
+{% block content %}
+    {{customer.first_name}}
+    <br>
+    {{customer.username}}
+<br>
+<br>
+<h2>
+    You Can Add the Reciepts Here
+</h2>
+<form method="post" action="/accountHolders/{{customer.username}}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username">Username</label>
+    <div class="form-row">
+        <div class="col">
+        <input type="text" name = "username" class="form-control" value="{{customer.username}} ">
+    </div>
+    <div class="form-group">
+        <label for="firstname">FirstName</label>
+    <div class="form-row">
+        <div class="col">
+        <input type="text" name = "firstname" class="form-control" value="{{customer.first_name}} ">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <select id="inputState" class="form-control" name="product">
+            {% for product in Products %}
+                <option selected>{{product}}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <br>
+      <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" max="50">
+      <br>
+      <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+  <br>
+  <h1>Receipt History</h1>
+
+  <a href="{% url 'history' customer.username %}">History</a>
+  {% comment %} {% for Rec in Receipts %}
+    {% if Rec.username == customer.username %}
+        {{Rec.prod_name}}
+    {% endif %}
+    {{cus}}
+  {% endfor %} {% endcomment %}
+
+  {% comment %} {% if not Receipt %}
+  <h2>No History available</h2>
+  {% else %}
+  {% for Rec in Receipt %}
+      <li>{{Rec.prod_name}}</li>
+  {% endfor %}
+  {% endif %} {% endcomment %}
+{% endblock content %}

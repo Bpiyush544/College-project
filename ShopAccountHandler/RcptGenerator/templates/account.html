@@ -104,6 +104,11 @@
         <div class="col">
         <input type="text" name = "firstname" class="form-control" value="{{customer.first_name}} ">
     </div>
+    <div class="form-group">
+    <div class="form-row">
+        <div class="col">
+        <input id="data" type="text" name = "data" class="form-control" value="">
+    </div>
     {% comment %} <div class="form-group col-md-4">
         <label for="inputState">Product</label>
         <select id="inputState" class="form-control" name="product">
@@ -155,20 +160,24 @@
     }
 
     function showReciept(){
+      document.getElementById("data").value = "";
+      //data = "";
         reciept = document.getElementById('reciept');
         var ul = document.getElementById("reciept");
-        //console.log(localStorage.length)
         for(i = 0; i<localStorage.length; i++){
           var li = document.createElement("li");
           li.innerText = localStorage.key(i);
           li.innerText += " :";
           li.innerText += localStorage.getItem(localStorage.key(i));
-          //console.log(localStorage.key(i));
-          //console.log("hello")
-          //li.innerText =  (localStorage.getItem(localStorage.key(i)));
-          //console.log(li)
+          //console.log(typeof(localStorage.key(i)));
+          document.getElementById("data").value+= localStorage.key(i);
+          document.getElementById("data").value+= '-';
+          document.getElementById("data").value+= localStorage.getItem(localStorage.key(i));
+          document.getElementById("data").value+=',';
           ul.append(li);
         }
+        
+        //document.getElementById("data").value+= "hello";
     }
     </script>
 

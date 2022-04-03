@@ -44,13 +44,26 @@ def account(request, cus):
     if request.method == "POST":
         userName = request.POST.get('username')
         firstName = request.POST.get('firstname')
-        quantity = request.POST.get('quantity')
-        prodName = request.POST.get('product')
+        data = request.POST.get('data')
+        newData = data.split(',')
+        print(newData)
+        newData.pop()
+        print(newData)
+#       now with the help of data i can retrieve the product as well as quantity and save
+        for item in newData:
+            a = item.split('-')
+            prodName = a[0]
+            quantity = a[1]
+            Rec = Receipt(username=userName, first_name=firstName, prod_name=prodName,
+                          prod_quantity=quantity, date=datetime.datetime.now().date())
+            Rec.save()
+        # quantity = request.POST.get('quantity')
+        # prodName = request.POST.get('product')
 
-        Rec = Receipt(username=userName, first_name=firstName,
-                      prod_name=prodName, prod_quantity=quantity, date=datetime.datetime.now().date())
-        print("date right now is ", datetime.datetime.now().date())
-        Rec.save()
+        # Rec = Receipt(username=userName, first_name=firstName,
+        #               prod_name=prodName, prod_quantity=quantity, date=datetime.datetime.now().date())
+        # print("date right now is ", datetime.datetime.now().date())
+        # Rec.save()
     first_name = User.objects.filter(username=cus).values('first_name')
     last_name = User.objects.filter(username=cus).values('last_name')
     email = User.objects.filter(username=cus).values('email')

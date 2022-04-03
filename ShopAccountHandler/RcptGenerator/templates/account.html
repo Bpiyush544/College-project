@@ -43,14 +43,16 @@
     z-index: 1;
   }
   
-  .dropdown-content a {
+  .dropdown-content button {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
+  {% comment %} use here {% endcomment %}
   
-  .dropdown a:hover {background-color: #ddd;}
+  .dropdown button:hover {background-color: #ddd;} 
+  {% comment %} use here {% endcomment %}
   
   .show {display: block;}
 {% endblock style %}
@@ -67,9 +69,28 @@
 <br>
 <br>
 <h2>
-    You Can Add the Reciepts Here
+  You Can Add the Reciepts Here
 </h2>
-{% comment %} <form method="post" action="/accountHolders/{{customer.username}}">
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Products</button>
+  <div id="myDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+    {% for product in Products %}
+      <button onclick="myFunc({{product}})" id="{{product}}">{{product}}</button>
+    {% endfor %}
+  </div><br><br>
+  <label for="quantity">Quantity:</label>
+  <input type="number" id="quantity" name="quantity" max="50" value=1>
+
+
+  <button onclick="showReciept()">Show Button</button>
+  <ul id="reciept">
+
+  </ul>
+  {% comment %} <button type="button">hello</button> {% endcomment %}
+</div>
+<form method="post" action="/accountHolders/{{customer.username}}">
     {% csrf_token %}
     <div class="form-group">
         <label for="username">Username</label>
@@ -83,65 +104,36 @@
         <div class="col">
         <input type="text" name = "firstname" class="form-control" value="{{customer.first_name}} ">
     </div>
-    <div class="form-group col-md-4">
+    {% comment %} <div class="form-group col-md-4">
         <label for="inputState">Product</label>
         <select id="inputState" class="form-control" name="product">
             {% for product in Products %}
                 <option selected>{{product}}</option>
             {% endfor %}
         </select>
-      </div>
-      <br>
-      <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" max="50">
+      </div> {% endcomment %}
       <br>
       <br>
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form> {% endcomment %}
+  </form>
   <br>
   <br>
-  <h2>Search/Filter Dropdown</h2>
-  <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
-  
-  <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-    <div id="myDropdown" class="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <a href="#">About</a>
-      <a href="#">Base</a>
-      <a href="#">Blog</a>
-      <a href="#">Contact</a>
-      <a href="#">Custom</a>
-      <a href="#">Support</a>
-      <a href="#">Tools</a>
-      <button type="button">hello</button>
-    </div>
-  </div>
-
   <br>
   <br>
   <h1>Receipt History</h1>
-
   <a href="{% url 'history' customer.username %}">History</a>
-
-
-
-
-
-
   <script>
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
     function myFunction() {
       document.getElementById("myDropdown").classList.toggle("show");
     }
-    
     function filterFunction() {
       var input, filter, ul, li, a, i;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
       div = document.getElementById("myDropdown");
-      a = div.getElementsByTagName("a");
+      a = div.getElementsByTagName("button");
       for (i = 0; i < a.length; i++) {
         txtValue = a[i].textContent || a[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -150,6 +142,33 @@
           a[i].style.display = "none";
         }
       }
+    }
+    function myFunc(val){
+      var quantity = document.getElementById('quantity').value;
+      if(localStorage.getItem(val.innerText)!==null){
+        var temp = parseInt(localStorage.getItem(val.innerText));
+        temp = temp + parseInt(quantity);
+        localStorage.setItem(val.innerText,temp);
+      }else{
+        localStorage.setItem(val.innerText,quantity);
+      }
+    }
+
+    function showReciept(){
+        reciept = document.getElementById('reciept');
+        var ul = document.getElementById("reciept");
+        //console.log(localStorage.length)
+        for(i = 0; i<localStorage.length; i++){
+          var li = document.createElement("li");
+          li.innerText = localStorage.key(i);
+          li.innerText += " :";
+          li.innerText += localStorage.getItem(localStorage.key(i));
+          //console.log(localStorage.key(i));
+          //console.log("hello")
+          //li.innerText =  (localStorage.getItem(localStorage.key(i)));
+          //console.log(li)
+          ul.append(li);
+        }
     }
     </script>
 
@@ -161,8 +180,9 @@
   
   
   
-  
-  
+{% comment %}   
+  product selected would be the one i click then i would have to choose the amount initially the amount would be
+  1 but could be customised if the owner wants to do so {% endcomment %}
   
   
   

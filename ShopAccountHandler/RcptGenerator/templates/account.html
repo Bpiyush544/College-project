@@ -68,6 +68,9 @@
     {{customer.username}}
 <br>
 <br>
+<script>
+  sessionStorage.clear();
+</script>
 <h2>
   You Can Add the Reciepts Here
 </h2>
@@ -150,12 +153,12 @@
     }
     function myFunc(val){
       var quantity = document.getElementById('quantity').value;
-      if(localStorage.getItem(val.innerText)!==null){
-        var temp = parseInt(localStorage.getItem(val.innerText));
+      if(sessionStorage.getItem(val.innerText)!==null){
+        var temp = parseInt(sessionStorage.getItem(val.innerText));
         temp = temp + parseInt(quantity);
-        localStorage.setItem(val.innerText,temp);
+        sessionStorage.setItem(val.innerText,temp);
       }else{
-        localStorage.setItem(val.innerText,quantity);
+        sessionStorage.setItem(val.innerText,quantity);
       }
     }
 
@@ -164,15 +167,15 @@
       //data = "";
         reciept = document.getElementById('reciept');
         var ul = document.getElementById("reciept");
-        for(i = 0; i<localStorage.length; i++){
+        for(i = 0; i<sessionStorage.length; i++){
           var li = document.createElement("li");
-          li.innerText = localStorage.key(i);
+          li.innerText = sessionStorage.key(i);
           li.innerText += " :";
-          li.innerText += localStorage.getItem(localStorage.key(i));
-          //console.log(typeof(localStorage.key(i)));
-          document.getElementById("data").value+= localStorage.key(i);
+          li.innerText += sessionStorage.getItem(sessionStorage.key(i));
+          //console.log(typeof(sessionStorage.key(i)));
+          document.getElementById("data").value+= sessionStorage.key(i);
           document.getElementById("data").value+= '-';
-          document.getElementById("data").value+= localStorage.getItem(localStorage.key(i));
+          document.getElementById("data").value+= sessionStorage.getItem(sessionStorage.key(i));
           document.getElementById("data").value+=',';
           ul.append(li);
         }

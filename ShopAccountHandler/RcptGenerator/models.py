@@ -63,3 +63,12 @@ class Receipt(models.Model):
 
     def __str__(self):
         return self.prod_name
+
+
+class Amount(models.Model):
+    username = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    money = models.IntegerField()
+
+    def __str__(self):
+        return self.username

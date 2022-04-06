@@ -1,4 +1,5 @@
 import datetime
+from dis import dis
 from math import prod
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
@@ -32,16 +33,16 @@ def AddProductView(request):
     if request.method == "POST":
         prodname = request.POST.get('prodname')
         # we will try to precompute stuff here
-        newprodname = ""
+        display_name = ""
         for c in prodname:
             if c != ' ':
-                newprodname += c
+                display_name += c
             else:
-                newprodname += '_'
+                display_name += '_'
         description = request.POST.get('description')
         image = request.POST.get('image')
         price = request.POST.get('price')
-        prodAdd = Product(name=newprodname, description=description,
+        prodAdd = Product(name=display_name, display_name=prodname, description=description,
                           image=image, price=price)
         prodAdd.save()
     return render(request, 'add_product.html')
@@ -71,9 +72,20 @@ def account(request, cus):
             a = item.split('-')
             prodName = a[0]
             quantity = a[1]
+            # print(type(quantity))
+            temp += Product.objects.filter(
+                name=prodName).values('price')[0]['price']*int(quantity)
+            print(Product.objects.filter(
+                name=prodName).values('price')[0]['price'])
             Rec = Receipt(username=userName, first_name=firstName, prod_name=prodName,
                           prod_quantity=quantity, date=datetime.datetime.now().date())
             Rec.save()
+        t = Amount.objects.filter(username=cus).values('money')[0]['money']
+        print(t)
+        t += temp
+        Amount.objects.filter(username=cus).update(money=t)
+        t = Amount.objects.filter(username=cus).values('money')[0]['money']
+        print(t)
     first_name = User.objects.filter(username=cus).values('first_name')
     last_name = User.objects.filter(username=cus).values('last_name')
     email = User.objects.filter(username=cus).values('email')

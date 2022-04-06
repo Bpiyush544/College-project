@@ -71,6 +71,9 @@
 <script>
   sessionStorage.clear();
 </script>
+
+<h1>Current Money   - <span>0</span></h1> 
+
 <h2>
   You Can Add the Reciepts Here
 </h2>
@@ -80,7 +83,7 @@
   <div id="myDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
     {% for product in Products %}
-      <button onclick="myFunc({{product}})" id="{{product}}">{{product}}</button>
+      <button style="border:none" onclick="myFunc({{product}})" id="{{product}}">{{product}}</button>
     {% endfor %}
   </div><br><br>
   <label for="quantity">Quantity:</label>

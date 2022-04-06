@@ -8,13 +8,15 @@ from django.utils import timezone
 class Product(models.Model):
     prod_id = models.AutoField
     name = models.CharField(max_length=255)
+    display_name = models.CharField(
+        max_length=255, null=True, blank=True, default="")
     price = models.IntegerField()
     description = models.CharField(max_length=2000, null=True, blank=True)
     image = models.ImageField(null=True, blank=True,
                               upload_to="images/product/")
 
     def __str__(self):
-        return self.name
+        return self.display_name
 
     def get_absolute_url(self):
         return reverse('home')

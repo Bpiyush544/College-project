@@ -1,4 +1,5 @@
 import datetime
+from math import prod
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
 # from django.views.generic import CreateView
@@ -30,11 +31,17 @@ def AddProductView(request):
     # fields = '__all__'
     if request.method == "POST":
         prodname = request.POST.get('prodname')
+        # we will try to precompute stuff here
+        newprodname = ""
+        for c in prodname:
+            if c != ' ':
+                newprodname += c
+            else:
+                newprodname += '_'
         description = request.POST.get('description')
         image = request.POST.get('image')
         price = request.POST.get('price')
-
-        prodAdd = Product(name=prodname, description=description,
+        prodAdd = Product(name=newprodname, description=description,
                           image=image, price=price)
         prodAdd.save()
     return render(request, 'add_product.html')
@@ -89,3 +96,7 @@ def account(request, cus):
 def historyView(request, mssg):
     Receipts = Receipt.objects.filter(username=mssg+" ")
     return render(request, 'history.html', {'Receipts': Receipts})
+
+
+#  we can update the initial model of Product and include another field into it that would be display name field
+#  we could recompute the initial name we gave to the product to a name which include underscores

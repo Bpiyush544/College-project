@@ -1,8 +1,7 @@
-from asyncio.windows_events import NULL
 import datetime
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
-from django.views.generic import CreateView
+# from django.views.generic import CreateView
 from django.contrib.auth.models import User
 
 
@@ -24,10 +23,21 @@ def ProductListView(request):
     return render(request, 'product_list.html', {'product_menu_list': product_menu_list})
 
 
-class AddProductView(CreateView):
-    model = Product
-    template_name = 'add_product.html'
-    fields = '__all__'
+def AddProductView(request):
+    # CreateView
+    # model = Product
+    # template_name = 'add_product.html'
+    # fields = '__all__'
+    if request.method == "POST":
+        prodname = request.POST.get('prodname')
+        description = request.POST.get('description')
+        image = request.POST.get('image')
+        price = request.POST.get('price')
+
+        prodAdd = Product(name=prodname, description=description,
+                          image=image, price=price)
+        prodAdd.save()
+    return render(request, 'add_product.html')
 
 
 def ProductDetailView(request, pk):

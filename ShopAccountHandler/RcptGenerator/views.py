@@ -102,7 +102,7 @@ def account(request, cus):
         # print(amnt)
     cust = {"first_name": first_name[0]['first_name'],
             'last_name': last_name[0]['last_name'], 'email': email[0]['email'], 'username': username[0]['username']}
-    return render(request, 'account.html', {'customer': cust, 'Products': Product.objects.all()})
+    return render(request, 'account.html', {'customer': cust, 'Products': Product.objects.all(), 'amount': Amount.objects.filter(username=cus).values('money')[0]['money']})
 
 
 def historyView(request, mssg):

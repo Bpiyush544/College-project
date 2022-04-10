@@ -6,13 +6,20 @@
 
 
 {% block content %}
-    {% for user in accountHolders %}
-    {% comment %} {% if user.is_superuser  == False %} {% endcomment %}
-    <h2>
-        <a href="/accountHolders/{{user}}">
-            {{user}}
-        </a>
-    </h2>
-    {% comment %} {% endif %} {% endcomment %}
-    {% endfor %}
+    <div class="container">
+        <div class="row">
+
+            {% for user in accountHolders %}
+            <div class="card m-2" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{user}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="/accountHolders/{{user}}" class="card-link">Card link</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+        
 {% endblock content %}

@@ -34,10 +34,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'product_list' %}">Product List</a>
                     </li>
-                    {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>
                     </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
                     </li>

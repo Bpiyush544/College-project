@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_superuser %}
     <h1>Add Product</h1>
     <div class="form-group">
         <form method="post" action="/add_product/">

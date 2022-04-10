@@ -4,10 +4,11 @@
     History
 {% endblock title %}
 {% block content %}
-    {% for Rec in Receipts %}
-        <h3>
-            {{Rec.prod_name}}
-        </h3>
-        quantity - {{Rec.prod_quantity}}
-    {% endfor %}
+    {% for key, value in letsGo.items %}
+        <h1>{{key}}</h1>
+        {% for rec in value %}
+            {{rec.prod_name}} 
+            {{rec.prod_quantity}} 
+        {% endfor %}
+{% endfor %}
 {% endblock content %}

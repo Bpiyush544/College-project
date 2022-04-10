@@ -107,7 +107,15 @@ def account(request, cus):
 
 def historyView(request, mssg):
     Receipts = Receipt.objects.filter(username=mssg+" ")
-    return render(request, 'history.html', {'Receipts': Receipts})
+    letsGo = {}
+    for rec in Receipts:
+        if rec.date.strftime("%Y/%m/%d") in letsGo:
+            letsGo[rec.date.strftime("%Y/%m/%d")].append(rec)
+        else:
+            letsGo[rec.date.strftime("%Y/%m/%d")] = []
+            letsGo[rec.date.strftime("%Y/%m/%d")].append(rec)
+    print(letsGo)
+    return render(request, 'history.html', {'letsGo': letsGo})
 
 
 #  we can update the initial model of Product and include another field into it that would be display name field

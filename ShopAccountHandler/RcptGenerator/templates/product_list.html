@@ -4,15 +4,25 @@
 {% block content %}
     <h1>Products</h1>
     <div class="container">
-        <ul>    
+        <div class="row">
+
             {% for item in product_menu_list %}
-            {% comment %} <li><a class="dropdown-item" href="{% url 'product' item %}">{{item}}</a></li> {% endcomment %}
-            <h1>{{item}}</h1>
-            <li>{{item.description}}</li>
-            <li>{{item.price}}</li>
-            {% comment %} {{item.id}} {% endcomment %}
-            <a href="product_display/{{item.id}}">Hello</a>
+            <div class="card mb-3 m-2" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDJtw_hTiNTLTpJjR11cdQzG5BTsnW_5vCQ&usqp=CAU" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{item}}</h5>
+                      <p class="card-text">{{item.description}}</p>
+                      <a href="product_display/{{item.id}}" class="card-link">Card link</a>
+                      <p class="card-text"><small class="text-muted">{{item.price}}</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 {% endblock content %}

@@ -1,6 +1,7 @@
+from ast import Add
 from unicodedata import name
 from django.urls import path
-from . views import ProductDetailView, ProductListView, account, accountHolderView, historyView, home, AddProductView
+from . views import AddMoney, ProductDetailView, ProductListView, account, accountHolderView, historyView, home, AddProductView
 from . views import home
 
 urlpatterns = [
@@ -11,5 +12,6 @@ urlpatterns = [
          ProductDetailView, name="product_detail"),
     path('accountHolders/', accountHolderView, name="accountHolders"),
     path('accountHolders/<str:cus>', account, name="account"),
-    path('history/<str:mssg>', historyView, name="history")
+    path('history/<str:mssg>', historyView, name="history"),
+    path('add_money/<str:user>', AddMoney, name="add_money"),
 ]

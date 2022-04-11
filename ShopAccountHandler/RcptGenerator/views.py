@@ -118,5 +118,11 @@ def historyView(request, mssg):
     return render(request, 'history.html', {'letsGo': letsGo})
 
 
-#  we can update the initial model of Product and include another field into it that would be display name field
-#  we could recompute the initial name we gave to the product to a name which include underscores
+def AddMoney(request, user):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        amount = request.POST.get('amount')
+        print(len(username))
+    return render(request, 'add_money.html', {'username': user})
+    #  we can update the initial model of Product and include another field into it that would be display name field
+    #  we could recompute the initial name we gave to the product to a name which include underscores

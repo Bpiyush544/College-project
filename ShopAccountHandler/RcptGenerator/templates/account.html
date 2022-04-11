@@ -72,7 +72,9 @@
   sessionStorage.clear();
 </script>
 <h1>Current Money   - <span>{{amount}}</span></h1> 
-
+<a href="{% url 'add_money' customer.username %}"> 
+  ADD MONEY
+</a>
 <h2>
   You Can Add the Reciepts Here
 </h2>

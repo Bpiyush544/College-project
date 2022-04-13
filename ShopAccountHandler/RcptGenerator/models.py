@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.utils import timezone
 # Create your models here.
 
+# Product Updation is also left so we need to write that as well
+
 
 class Product(models.Model):
     prod_id = models.AutoField
@@ -13,7 +15,7 @@ class Product(models.Model):
     price = models.IntegerField()
     description = models.CharField(max_length=2000, null=True, blank=True)
     image = models.ImageField(null=True, blank=True,
-                              upload_to="images/product/")
+                              upload_to="images/")
 
     def __str__(self):
         return self.display_name

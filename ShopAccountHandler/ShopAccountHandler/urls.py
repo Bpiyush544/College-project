@@ -23,4 +23,4 @@ urlpatterns = [
     path('', include('RcptGenerator.urls')),
     path('Members/', include('django.contrib.auth.urls')),
     path('Members/', include('Members.urls')),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

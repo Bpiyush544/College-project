@@ -122,7 +122,13 @@ def AddMoney(request, user):
     if request.method == "POST":
         username = request.POST.get('username')
         amount = request.POST.get('amount')
-        print(len(username))
+        # print(Amount.objects.filter(
+        #     username=username).values('money')[0]['money'])
+        val = Amount.objects.filter(
+            username=username).values('money')[0]['money']
+        val = val - int(amount)
+        Amount.objects.filter(username=username).update(money=val)
+        # print(len(username))
     return render(request, 'add_money.html', {'username': user})
     #  we can update the initial model of Product and include another field into it that would be display name field
     #  we could recompute the initial name we gave to the product to a name which include underscores

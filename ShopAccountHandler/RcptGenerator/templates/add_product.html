@@ -4,9 +4,10 @@
 {% if user.is_superuser %}
     <h1>Add Product</h1>
     <div class="form-group">
-        <form method="post" action="/add_product/">
+        <form method="POST" action="/add_product/">
             {% csrf_token %}
-            <div class="mb-3">
+            {{form.as_p}}
+            {% comment %} <div class="mb-3">
               <label for="name" class="form-label">Product Name</label>
               <input type="text" class="form-control" id="name" name='prodname'>
             </div>
@@ -23,7 +24,7 @@
                 <input type="file" class="form-control" id="image" name= 'image'>
             </div>
             <br>
-            <br>
+            <br> {% endcomment %}
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>

@@ -6,9 +6,9 @@ from . views import home
 
 urlpatterns = [
     path('', home, name="home"),
-    path('add_product/', AddProductView, name="add_product"),
+    path('add_product/', AddProductView.as_view(), name="add_product"),
     path('product_list/', ProductListView, name="product_list"),
-    path('product_list/product_display/<int:pk>/',
+    path('product_list/product_display/<str:name>/',
          ProductDetailView, name="product_detail"),
     path('accountHolders/', accountHolderView, name="accountHolders"),
     path('accountHolders/<str:cus>', account, name="account"),

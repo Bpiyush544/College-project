@@ -9,7 +9,7 @@ from django.utils import timezone
 
 class Product(models.Model):
     prod_id = models.AutoField
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default="")
     display_name = models.CharField(
         max_length=255, null=True, blank=True, default="")
     price = models.IntegerField()

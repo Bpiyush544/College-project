@@ -3,7 +3,7 @@ from dis import dis
 from math import prod
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
-# from django.views.generic import CreateView
+from django.views.generic import CreateView
 from django.contrib.auth.models import User
 
 
@@ -25,33 +25,33 @@ def ProductListView(request):
     return render(request, 'product_list.html', {'product_menu_list': product_menu_list})
 
 
-def AddProductView(request):
+class AddProductView(CreateView):
     # CreateView
-    # model = Product
-    # template_name = 'add_product.html'
-    # fields = '__all__'
-    if request.method == "POST":
-        prodname = request.POST.get('prodname')
-        # we will try to precompute stuff here
-        display_name = ""
-        for c in prodname:
-            if c != ' ':
-                display_name += c
-            else:
-                display_name += '_'
-        description = request.POST.get('description')
-        image = request.POST.get('image')
-        price = request.POST.get('price')
-        prodAdd = Product(name=display_name, display_name=prodname, description=description,
-                          image=image, price=price)
-        prodAdd.save()
-    return render(request, 'add_product.html')
+    model = Product
+    template_name = 'add_product.html'
+    fields = '__all__'
+    # if request.method == "POST":
+    #     prodname = request.POST.get('prodname')
+    #     display_name = ""
+    #     for c in prodname:
+    #         if c != ' ':
+    #             display_name += c
+    #         else:
+    #             display_name += '_'
+    #     description = request.POST.get('description')
+    #     image = request.POST.get('image')
+    #     price = request.POST.get('price')
+    #     prodAdd = Product(name=display_name, display_name=prodname, description=description,
+    #                       image=image, price=price)
+    #     prodAdd.save()
+    # return render(request, 'add_product.html')
 
 
-def ProductDetailView(request, pk):
-    prod = Product.objects.all()
-    newprod = prod[pk-1]
-    return render(request, 'product_display.html', {'prod': newprod})
+def ProductDetailView(request, name):
+    # prod = Product.objects.all()
+    prod = Product.objects.filter(name=name)
+    # print(prod[0])
+    return render(request, 'product_display.html', {'prod': prod[0]})
 
 
 def accountHolderView(request):
@@ -90,8 +90,8 @@ def account(request, cus):
     last_name = User.objects.filter(username=cus).values('last_name')
     email = User.objects.filter(username=cus).values('email')
     username = User.objects.filter(username=cus).values('username')
-    print("Here we are checking     ", (Amount.objects.filter(
-        username=cus).values('username')))
+    # print("Here we are checking     ", (Amount.objects.filter(
+    #     username=cus).values('username')))
     # print(username[0]['username'])
     if len(Amount.objects.filter(username=cus)) == 0:
         amnt = Amount(username=username[0]['username'],
@@ -102,6 +102,14 @@ def account(request, cus):
         # print(amnt)
     cust = {"first_name": first_name[0]['first_name'],
             'last_name': last_name[0]['last_name'], 'email': email[0]['email'], 'username': username[0]['username']}
+    # print(Product.objects.all())
+    for prod in Product.objects.all():
+        string = prod.display_name
+        print(string)
+        txt = string.replace(' ', '_')
+        print(txt)
+        # here i have to do precomptutations and update the name
+        Product.objects.filter(display_name=string).update(name=txt)
     return render(request, 'account.html', {'customer': cust, 'Products': Product.objects.all(), 'amount': Amount.objects.filter(username=cus).values('money')[0]['money']})
 
 

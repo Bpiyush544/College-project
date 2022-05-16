@@ -1,9 +1,9 @@
 import datetime
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.models import User
-from . forms import ProductForm
+from . forms import ProductForm, UpdateProductForm
 
 allUsers = User.objects.all()
 customers = []
@@ -19,7 +19,7 @@ def home(request):
 
 def ProductListView(request):
     product_menu_list = Product.objects.all()
-    print(product_menu_list[0].pk)
+    # print(product_menu_list[0].pk)
     return render(request, 'product_list.html', {'product_menu_list': product_menu_list})
 
 
@@ -44,6 +44,12 @@ class AddProductView(CreateView):
     #                       image=image, price=price)
     #     prodAdd.save()
     # return render(request, 'add_product.html')
+
+
+class UpdateProductView(UpdateView):
+    model = Product
+    form_class = UpdateProductForm
+    template_name = "product_update.html"
 
 
 def ProductDetailView(request, name):

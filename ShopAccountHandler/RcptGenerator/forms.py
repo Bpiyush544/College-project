@@ -23,6 +23,12 @@ class ProductForm(forms.ModelForm):
         }
 
 
-# class ProductEditForm(forms.ModelForm):
-#     class Meta:
-#         model = Product
+class UpdateProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('display_name', 'price', 'description', 'image')
+        widgets = {
+            'display_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+        }

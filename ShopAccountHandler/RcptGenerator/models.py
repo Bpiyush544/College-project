@@ -14,8 +14,8 @@ class Product(models.Model):
         max_length=255, null=True, blank=True, default="")
     price = models.IntegerField()
     description = models.CharField(max_length=2000, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True,
-                              upload_to="images/")
+    image = models.ImageField(
+        null=True, blank=True, upload_to="images/new")
 
     def __str__(self):
         return self.display_name

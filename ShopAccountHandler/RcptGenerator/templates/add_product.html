@@ -4,7 +4,7 @@
 {% if user.is_superuser %}
     <h1>Add Product</h1>
     <div class="form-group">
-        <form method="POST" action="/add_product/">
+        <form method="POST" action="/add_product/" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
             {% comment %} <div class="mb-3">

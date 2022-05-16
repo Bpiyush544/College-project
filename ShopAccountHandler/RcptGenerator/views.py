@@ -1,11 +1,9 @@
 import datetime
-from dis import dis
-from math import prod
 from django.shortcuts import render
 from . models import Product, Receipt, Amount
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
-
+from . forms import ProductForm
 
 allUsers = User.objects.all()
 customers = []
@@ -28,8 +26,9 @@ def ProductListView(request):
 class AddProductView(CreateView):
     # CreateView
     model = Product
+    form_class = ProductForm
+    # fields = '__all__'
     template_name = 'add_product.html'
-    fields = '__all__'
     # if request.method == "POST":
     #     prodname = request.POST.get('prodname')
     #     display_name = ""

@@ -1,3 +1,5 @@
+from email import message
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -15,7 +17,7 @@ class Product(models.Model):
         max_length=255, null=True, blank=True, default="")
     price = models.IntegerField()
     description = models.CharField(max_length=2000, null=True, blank=True)
-    body = RichTextField(blank= True, null = True)
+    body = RichTextField(blank=True, null=True)
     image = models.ImageField(
         null=True, blank=True, upload_to="images/new")
 
@@ -75,6 +77,17 @@ class Amount(models.Model):
     username = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     money = models.IntegerField()
+
+    def __str__(self):
+        return self.username
+
+
+class Contact(models.Model):
+    username = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=1023)
+    message = models.CharField(max_length=5000)
+    date = models.DateField()
 
     def __str__(self):
         return self.username

@@ -46,6 +46,10 @@ class AddProductView(CreateView):
     # return render(request, 'add_product.html')
 
 
+def contact(request):
+    return render(request, 'contact.html')
+
+
 class UpdateProductView(UpdateView):
     model = Product
     form_class = UpdateProductForm

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<form>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Username</label>
+      <input type="text" disabled class="form-control" value="{{user.username}}">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Name</label>
+      <input type="text" class="form-control" value="{{user.first_name}} {{user.last_name}}" disabled>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your Information with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea name="message" class="form-control" cols="30" rows="10" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% else %}
+You must register and login first
+{% endif %}
+{% endblock content %}

@@ -26,14 +26,13 @@ SECRET_KEY = 'django-insecure-d!+r21%)*&x$0!*4m%=gdwkt$^$uw@w$aln1&c!ld3&34m_krk
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
     # Self added Apps
     'RcptGenerator',
     'Members',
+    'ckeditor',
     # 3rd party apps
     'django.contrib.admin',
     'django.contrib.auth',

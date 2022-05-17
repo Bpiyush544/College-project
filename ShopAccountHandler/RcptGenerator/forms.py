@@ -14,21 +14,23 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('name', 'display_name',
-                  'price', 'description', 'image')
+                  'price', 'description', 'body', 'image')
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'display_name': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 
 class UpdateProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('display_name', 'price', 'description', 'image')
+        fields = ('display_name', 'price', 'description', 'body', 'image')
         widgets = {
             'display_name': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
         }

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 # Product Updation is also left so we need to write that as well
@@ -14,6 +15,7 @@ class Product(models.Model):
         max_length=255, null=True, blank=True, default="")
     price = models.IntegerField()
     description = models.CharField(max_length=2000, null=True, blank=True)
+    body = RichTextField(blank= True, null = True)
     image = models.ImageField(
         null=True, blank=True, upload_to="images/new")
 

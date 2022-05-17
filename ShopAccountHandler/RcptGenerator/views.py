@@ -1,6 +1,6 @@
 import datetime
 from django.shortcuts import render
-from . models import Product, Receipt, Amount
+from . models import Contact, Product, Receipt, Amount
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.models import User
 from . forms import ProductForm, UpdateProductForm
@@ -47,6 +47,13 @@ class AddProductView(CreateView):
 
 
 def contact(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        con = Contact(username= username, name= name, email= email, message= message)
+        Contact.save(con)
     return render(request, 'contact.html')
 
 

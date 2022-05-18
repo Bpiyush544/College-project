@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import (Product, Receipt, Amount)
+from . models import (Contact, Product, Receipt, Amount)
 
 # Register your models here.
 # admin.site.register(Receipt)
@@ -7,3 +7,4 @@ from . models import (Product, Receipt, Amount)
 admin.site.register(Product)
 admin.site.register(Receipt)
 admin.site.register(Amount)
+admin.site.register(Contact)

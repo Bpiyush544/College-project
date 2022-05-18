@@ -49,11 +49,14 @@ class AddProductView(CreateView):
 def contact(request):
     if request.method == "POST":
         username = request.POST.get('username')
-        name = request.POST.get('name')
+        name = request.POST.get('fname')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        con = Contact(username= username, name= name, email= email, message= message)
-        Contact.save(con)
+        # con = Contact(username=username, name=name,
+        #               email=email, message=message)
+        # print(con)
+        print(username)
+        # con.save()
     return render(request, 'contact.html')
 
 

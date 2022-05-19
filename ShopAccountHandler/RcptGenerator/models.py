@@ -1,5 +1,3 @@
-from email import message
-from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -86,6 +84,7 @@ class Contact(models.Model):
     username = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     email = models.CharField(max_length=1023)
+    subject = models.CharField(max_length=255, default="")
     message = models.CharField(max_length=5000)
     date = models.DateField()
 

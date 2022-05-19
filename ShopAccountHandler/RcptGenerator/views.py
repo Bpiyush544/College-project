@@ -4,7 +4,7 @@ from . models import Contact, Product, Receipt, Amount
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.models import User
 from . forms import ProductForm, UpdateProductForm
-
+from django.core.mail import send_mail
 allUsers = User.objects.all()
 customers = []
 
@@ -51,12 +51,21 @@ def contact(request):
         username = request.POST.get('username')
         name = request.POST.get('fname')
         email = request.POST.get('email')
+        subject = request.POST.get('subject')
         message = request.POST.get('message')
-        # con = Contact(username=username, name=name,
-        #               email=email, message=message)
-        # print(con)
-        print(username)
-        # con.save()
+        # print(name)
+        # writint code to send an email
+        send_mail(
+            'message from ' + name,  # subject
+            message,  # message
+            email,  # from email
+            ['piyushb544@gmail.com'],  # to email
+        )
+        con = Contact(username=username, first_name=name,
+                      email=email, subject=subject, message=message, date=datetime.datetime.now().date())
+        print(con)
+        # print(username)
+        con.save()
     return render(request, 'contact.html')
 
 

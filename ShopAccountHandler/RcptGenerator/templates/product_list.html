@@ -26,4 +26,16 @@
             {% endfor %}
         </div>
     </div>
+    {{product_menu_list}}
+    {% if product_menu_list.has_previous %}
+      <a href="?page=1">&laquo First</a>
+      <a href="?page={{product_menu_list.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    Page {{product_menu_list.number}} of {{product_menu_list.paginator.num_pages}}
+
+    {% if product_menu_list.has_next %}
+    <a href="?page={{product_menu_list.next_page_number}}">Next</a>
+    <a href="?page={{product_menu_list.paginator.num_pages}}">Last &raquo</a>
+    {% endif %}
 {% endblock content %}

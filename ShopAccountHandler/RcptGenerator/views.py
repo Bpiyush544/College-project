@@ -1,10 +1,12 @@
 import datetime
+from math import prod
 from django.shortcuts import render
 from . models import Contact, Product, Receipt, Amount
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.models import User
 from . forms import ProductForm, UpdateProductForm
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 allUsers = User.objects.all()
 customers = []
 
@@ -18,8 +20,12 @@ def home(request):
 
 
 def ProductListView(request):
-    product_menu_list = Product.objects.all()
+    # product_menu_list = Product.objects.all()
     # print(product_menu_list[0].pk)
+    p = Paginator(Product.objects.all(), 8)
+    page = request.GET.get('page')
+    product_menu_list = p.get_page(page)
+    # print(prods)
     return render(request, 'product_list.html', {'product_menu_list': product_menu_list})
 
 
@@ -63,7 +69,7 @@ def contact(request):
         )
         con = Contact(username=username, first_name=name,
                       email=email, subject=subject, message=message, date=datetime.datetime.now().date())
-        print(con)
+        # print(con)
         # print(username)
         con.save()
     return render(request, 'contact.html')
@@ -109,11 +115,11 @@ def account(request, cus):
                           prod_quantity=quantity, date=datetime.datetime.now().date())
             Rec.save()
         t = Amount.objects.filter(username=cus).values('money')[0]['money']
-        print(t)
+        # print(t)
         t += temp
         Amount.objects.filter(username=cus).update(money=t)
         t = Amount.objects.filter(username=cus).values('money')[0]['money']
-        print(t)
+        # print(t)
     first_name = User.objects.filter(username=cus).values('first_name')
     last_name = User.objects.filter(username=cus).values('last_name')
     email = User.objects.filter(username=cus).values('email')
@@ -133,9 +139,9 @@ def account(request, cus):
     # print(Product.objects.all())
     for prod in Product.objects.all():
         string = prod.display_name
-        print(string)
+        # print(string)
         txt = string.replace(' ', '_')
-        print(txt)
+        # print(txt)
         # here i have to do precomptutations and update the name
         Product.objects.filter(display_name=string).update(name=txt)
     return render(request, 'account.html', {'customer': cust, 'Products': Product.objects.all(), 'amount': Amount.objects.filter(username=cus).values('money')[0]['money']})
@@ -150,7 +156,7 @@ def historyView(request, mssg):
         else:
             letsGo[rec.date.strftime("%Y/%m/%d")] = []
             letsGo[rec.date.strftime("%Y/%m/%d")].append(rec)
-    print(letsGo)
+    # print(letsGo)
     return render(request, 'history.html', {'letsGo': letsGo})
 
 

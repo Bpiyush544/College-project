@@ -20,20 +20,18 @@ def home(request):
 
 
 def ProductListView(request):
-    # product_menu_list = Product.objects.all()
-    # print(product_menu_list[0].pk)
+    # this is used to provide pagination to the page
     p = Paginator(Product.objects.all(), 8)
     page = request.GET.get('page')
     product_menu_list = p.get_page(page)
-    # print(prods)
     return render(request, 'product_list.html', {'product_menu_list': product_menu_list})
 
 
 class AddProductView(CreateView):
     # CreateView
+    # here we are using the inbuilt CreateView
     model = Product
     form_class = ProductForm
-    # fields = '__all__'
     template_name = 'add_product.html'
     # if request.method == "POST":
     #     prodname = request.POST.get('prodname')
@@ -59,7 +57,6 @@ def contact(request):
         email = request.POST.get('email')
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        # print(name)
         # writint code to send an email
         send_mail(
             'message from ' + name,  # subject
@@ -69,8 +66,6 @@ def contact(request):
         )
         con = Contact(username=username, first_name=name,
                       email=email, subject=subject, message=message, date=datetime.datetime.now().date())
-        # print(con)
-        # print(username)
         con.save()
     return render(request, 'contact.html')
 
@@ -82,14 +77,11 @@ class UpdateProductView(UpdateView):
 
 
 def ProductDetailView(request, name):
-    # prod = Product.objects.all()
     prod = Product.objects.filter(name=name)
-    # print(prod[0])
     return render(request, 'product_display.html', {'prod': prod[0]})
 
 
 def accountHolderView(request):
-    # print(customers)
     return render(request, 'accountHolders.html', {'accountHolders': customers})
 
 
@@ -101,12 +93,11 @@ def account(request, cus):
         newData = data.split(',')
         newData.pop()
         temp = 0
-#       now with the help of data i can retrieve the product as well as quantity and save
+        # now with the help of data i can retrieve the product as well as quantity and save
         for item in newData:
             a = item.split('-')
             prodName = a[0]
             quantity = a[1]
-            # print(type(quantity))
             temp += Product.objects.filter(
                 name=prodName).values('price')[0]['price']*int(quantity)
             print(Product.objects.filter(
@@ -115,11 +106,9 @@ def account(request, cus):
                           prod_quantity=quantity, date=datetime.datetime.now().date())
             Rec.save()
         t = Amount.objects.filter(username=cus).values('money')[0]['money']
-        # print(t)
         t += temp
         Amount.objects.filter(username=cus).update(money=t)
         t = Amount.objects.filter(username=cus).values('money')[0]['money']
-        # print(t)
     first_name = User.objects.filter(username=cus).values('first_name')
     last_name = User.objects.filter(username=cus).values('last_name')
     email = User.objects.filter(username=cus).values('email')
@@ -131,9 +120,7 @@ def account(request, cus):
         amnt = Amount(username=username[0]['username'],
                       first_name=first_name[0]['first_name'], money=0)
         amnt.save()
-        # amnt = {"username": username[0]['username'],
-        #         "first_name": first_name[0]['first_name'], "money": 0}
-        # print(amnt)
+
     cust = {"first_name": first_name[0]['first_name'],
             'last_name': last_name[0]['last_name'], 'email': email[0]['email'], 'username': username[0]['username']}
     # print(Product.objects.all())
@@ -156,7 +143,7 @@ def historyView(request, mssg):
         else:
             letsGo[rec.date.strftime("%Y/%m/%d")] = []
             letsGo[rec.date.strftime("%Y/%m/%d")].append(rec)
-    # print(letsGo)
+    # print(type(letsGo))
     return render(request, 'history.html', {'letsGo': letsGo})
 
 
@@ -164,13 +151,10 @@ def AddMoney(request, user):
     if request.method == "POST":
         username = request.POST.get('username')
         amount = request.POST.get('amount')
-        # print(Amount.objects.filter(
-        #     username=username).values('money')[0]['money'])
         val = Amount.objects.filter(
             username=username).values('money')[0]['money']
         val = val - int(amount)
         Amount.objects.filter(username=username).update(money=val)
-        # print(len(username))
     return render(request, 'add_money.html', {'username': user})
     #  we can update the initial model of Product and include another field into it that would be display name field
     #  we could recompute the initial name we gave to the product to a name which include underscores

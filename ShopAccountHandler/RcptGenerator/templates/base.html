@@ -12,6 +12,10 @@
         {% endblock title %}
     </title>
     <style>
+        .contain{
+            margin: 25px;
+            padding: 2px;
+        }
         {% block style %}
         {% endblock style %}
     </style>
@@ -69,9 +73,10 @@
             </div>
         </div>
     </nav>
-
-    {% block content %}
-    
-    {% endblock content %}
+    <div class="contain">
+        {% block content %}
+        
+        {% endblock content %}
+    </div>
 </body>
 </html>

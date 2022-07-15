@@ -4,11 +4,11 @@
 <form method="post">
     {% csrf_token %}
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Username - {{user.username}}</label>
+      <label for="exampleInputEmail1" class="form-label"><h3> Username - <b>{{user.username}}</b> </h3></label>
       <input type="hidden" name = "username" class="form-control" value="{{user.username}}">
     </div>
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Name - {{user.first_name}} {{user.last_name}}</label>
+      <label for="exampleInputEmail1" class="form-label"><h3> Name - <b> {{user.first_name}} {{user.last_name}} </b> </h3></label>
       <input type="hidden" name="fname" class="form-control" value="{{user.first_name}} {{user.last_name}}">
     </div>
     <div class="mb-3">

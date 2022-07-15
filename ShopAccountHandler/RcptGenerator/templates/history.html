@@ -4,14 +4,29 @@
     History
 {% endblock title %}
 {% block content %}
-    {% for key, value in letsGo.items %}
+    {% comment %} {% for key, value in letsGo.items %}
         <h1>{{key}}</h1>
         {% for rec in value %}
             {{rec.prod_name}} 
             {{rec.prod_quantity}} 
             <br>
         {% endfor %}
-{% endfor %}
+{% endfor %} {% endcomment %}
 
-
+<ol class="list-group ">
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        {% for key,value in letsGo.items %}
+        <div class="container" style="padding:20px">
+            <div class="fw-bold"> <h4>{{key}}</h4></div>
+            {% for rec in value %}
+            {{rec.prod_name}}
+            <span class="badge bg-primary rounded-pill">{{rec.prod_quantity}}</span>
+            <br>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    </li>
+  </ol>
 {% endblock content %}

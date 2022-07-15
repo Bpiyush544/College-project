@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-
-
 {% block style %}
 .dropbtn {
     background-color: #04AA6D;
@@ -10,11 +8,9 @@
     border: none;
     cursor: pointer;
   }
-  
   .dropbtn:hover, .dropbtn:focus {
     background-color: #3e8e41;
   }
-  
   #myInput {
     box-sizing: border-box;
     background-image: url('searchicon.png');
@@ -25,14 +21,11 @@
     border: none;
     border-bottom: 1px solid #ddd;
   }
-  
   #myInput:focus {outline: 3px solid #ddd;}
-  
   .dropdown {
     position: relative;
     display: inline-block;
   }
-  
   .dropdown-content {
     display: none;
     position: absolute;
@@ -42,7 +35,6 @@
     border: 1px solid #ddd;
     z-index: 1;
   }
-  
   .dropdown-content button {
     color: black;
     padding: 12px 16px;
@@ -50,76 +42,82 @@
     display: block;
   }
   {% comment %} use here {% endcomment %}
-  
   .dropdown button:hover {background-color: #ddd;} 
   {% comment %} use here {% endcomment %}
-  
   .show {display: block;}
+  .hidden{
+    display:none;
+  }
 {% endblock style %}
 
-
 {% block title %}
-    new page
+    Account
 {% endblock title %}
 
 {% block content %}
-    {{customer.first_name}}
-    <br>
-    {{customer.username}}
-<br>
+<!--  on the  bootstrap page we have List group which we could use for our History page -->
+<h3>
+  Username - <b>{{customer.username}}</b>
+</h3>
+<h3>
+  Name - <b>{{customer.first_name}}</b>
+</h3>
 <br>
 <script>
   sessionStorage.clear();
 </script>
-<h1>Current Money   - <span>{{amount}}</span></h1> 
-<a href="{% url 'add_money' customer.username %}"> 
-  ADD MONEY
-</a>
+  <h4>Current Money   - <span>{{amount}}</span></h4> 
+  {% comment %} <button class="btn btn-primary"> {% endcomment %}
+
+    <a href="{% url 'add_money' customer.username %}" style="text-decoration:none ,color: white "> 
+      ADD MONEY
+    </a>
+  {% comment %} </button> {% endcomment %}
 <h2>
   You Can Add the Reciepts Here
 </h2>
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Products</button>
-  <div id="myDropdown" class="dropdown-content">
-    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-    {% for product in Products %}
-      <button style="border:none" onclick="myFunc({{product.name}})" id="{{product.name}}">{{product.name}}</button>
-    {% endfor %}
-  </div><br><br>
-  <label for="quantity">Quantity:</label>
-  <input type="number" id="quantity" name="quantity" max="50" value=1>
-  <button onclick="showReciept()">Show Button</button>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-lg-6">
+        <div class="dropdown">
+          <button onclick="myFunction()" class="dropbtn">Products</button>
+          <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+            {% for product in Products %}
+              <button style="border:none" onclick="myFunc({{product.name}})" id="{{product.name}}">{{product.name}}</button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" max="50" value=1>
+        <button onclick="showReciept()">Show Button</button>
+      </div>
+  </div>
+</div>
     <ul id="reciept">
     </ul>
-  {% comment %} <button type="button">hello</button> {% endcomment %}
-</div>
-<form method="post" action="/accountHolders/{{customer.username}}">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="username">Username</label>
-    <div class="form-row">
-        <div class="col">
-        <input type="text" name = "username" class="form-control" value="{{customer.username}} ">
-    </div>
-    <div class="form-group">
-        <label for="firstname">FirstName</label>
-    <div class="form-row">
-        <div class="col">
-        <input type="text" name = "firstname" class="form-control" value="{{customer.first_name}} ">
-    </div>
-    <div class="form-group">
-    <div class="form-row">
-        <div class="col">
-        <input id="data" type="text" name = "data" class="form-control" value="">
-    </div>
-    {% comment %} <div class="form-group col-md-4">
-        <label for="inputState">Product</label>
-        <select id="inputState" class="form-control" name="product">
-            {% for product in Products %}
-                <option selected>{{product}}</option>
-            {% endfor %}
-        </select>
-      </div> {% endcomment %}
+      <form method="post" action="/accountHolders/{{customer.username}}">
+        {% csrf_token %}
+        <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <input type="text" style="display:none" name = "username" class="form-control" value="{{customer.username}} ">
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" style="display:none" name = "firstname" class="form-control" value="{{customer.first_name}} ">
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <input id="data" style="display:none" type="text" name = "data" class="form-control" value="">
+                  </div>
       <br>
       <br>
     <button type="submit" class="btn btn-primary">Submit</button>

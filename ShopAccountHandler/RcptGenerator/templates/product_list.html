@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
     <h1>Products</h1>
     <div class="container">
         <div class="row">
-
             {% for item in product_menu_list %}
             <div class="card mb-3 m-2" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDJtw_hTiNTLTpJjR11cdQzG5BTsnW_5vCQ&usqp=CAU" class="img-fluid rounded-start" alt="...">
+                      {% if item.image %}
+                      <img src="/media/{{item.image}}" class="img-fluid rounded-start" alt="...">
+                      {% else %}
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDJtw_hTiNTLTpJjR11cdQzG5BTsnW_5vCQ&usqp=CAU" class="img-fluid rounded-start" alt="...">
+                      {% endif %}
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">

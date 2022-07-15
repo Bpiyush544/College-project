@@ -17,7 +17,7 @@ class Product(models.Model):
     description = models.CharField(max_length=2000, null=True, blank=True)
     body = RichTextField(blank=True, null=True)
     image = models.ImageField(
-        null=True, blank=True, upload_to="images/new")
+        null=True, blank=True, upload_to="images")
 
     def __str__(self):
         return self.display_name
